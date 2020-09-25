@@ -81,6 +81,7 @@ p {
 .card-usuario {
   margin-top: 30px;
   margin: 50px 0px 50px 20px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 12px rgba(40, 50, 60, 0.1);
@@ -90,7 +91,7 @@ p {
   cursor: pointer;
 }
 .card-usuario img {
-  max-width: 100px;
+  max-width: 200px;
 }
 .nome-usuario {
   color: #ce3563;
@@ -103,5 +104,35 @@ p {
   width: 50px;
   height: 30px !important;
   font-size: 10px !important;
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 600px) {
+  .containerr {
+    width: 460px;
+  }
+
+  .card-usuario {
+    margin: 20px 0px 50px 20px;
+    height: 240px;
+  }
+
+  .title h2 {
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+
+  .card-usuario img {
+    width: 100px;
+  }
+
+  .v-input {
+    width: 300px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: 14px;
+  }
 }
 </style>

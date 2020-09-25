@@ -63,22 +63,6 @@ export default {
       this.findPokemon(this.id - 1);
     },
   },
-  // computed: {
-  //   ...mapState(["pokemonsPokedex", "pokedex"]),
-  // },
-  // methods: {
-  //   ...mapActions(["getPokedex", "pokemonInPokedex"]),
-  //   pokedexItens() {
-  //     for (let i = 0; i < this.pokedex.length; i++) {
-  //       this.nomesPokemons.push(this.pokedex[i].name);
-  //     }
-  //   },
-  // },
-  // created() {
-  //   this.pokedexItens();
-  //   this.$store.dispatch("pokemonInPokedex", this.nomesPokemons);
-  //   this.$store.dispatch("getPokedex");
-  // },
 };
 </script>
 
@@ -98,21 +82,6 @@ export default {
   max-width: 40px;
   margin-left: 30px;
 }
-/* .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 12px rgba(99, 99, 99, 0.158);
-  padding: 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-.card-pokemons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
 /*-------POKEDEX----------*/
 .pokedex {
   position: relative;
@@ -172,5 +141,74 @@ export default {
   position: absolute;
   top: 160px;
   left: 115px;
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 600px) {
+  .containerr {
+    width: 480px;
+    height: 500px;
+  }
+
+  .pokedex {
+    position: relative;
+  }
+
+  .pokedex-img {
+    max-width: 430px;
+  }
+  .prev-btn {
+    position: absolute;
+    width: 30px;
+    left: 120px;
+    padding: 20px;
+    background: transparent;
+    top: 240px;
+    height: 25px;
+  }
+  .next-btn {
+    position: absolute;
+    width: 30px;
+    left: 180px;
+    padding: 20px;
+    background: transparent;
+    top: 240px;
+    height: 25px;
+  }
+  .pokemonNome {
+    position: absolute;
+    top: 120px;
+    right: 70px;
+  }
+
+  .pokemonNome p,
+  .pokemonTipo p {
+    color: #fff;
+  }
+  .pokemonTipo {
+    position: absolute;
+    top: 140px;
+    right: 73px;
+  }
+  .pokemonNome2 {
+    display: none;
+  }
+  .pokemons {
+    position: absolute;
+    top: 100px;
+    left: 70px;
+  }
+  .pokemons img {
+    width: 100px;
+  }
+  .img {
+    width: 60px;
+    position: absolute;
+    top: 120px;
+    left: 90px;
+  }
+  button {
+    outline: none;
+  }
 }
 </style>

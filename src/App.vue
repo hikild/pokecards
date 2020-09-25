@@ -15,12 +15,17 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import { mapState } from "vuex";
 export default {
   name: "App",
   components: {
     Header,
     Footer,
   },
+  computed: {
+    ...mapState(["usuarios", "id", "adicionado", "colecoes"]),
+  },
+  mounted() {},
 };
 </script>
 
@@ -48,10 +53,7 @@ a {
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
-}
-
-main {
-  flex: 1;
+  background-color: #7dad71;
 }
 
 .btn {
@@ -64,6 +66,11 @@ main {
   border-radius: 4px;
   margin: 0 auto;
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.v-application {
   display: flex;
   flex-direction: column;
 }

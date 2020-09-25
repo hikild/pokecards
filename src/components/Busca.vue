@@ -7,7 +7,7 @@
         <div class="line"></div>
         <p class="text-center">{{texto}}</p>
         <div class="flex">
-          <v-row class="d-flex align-center" no-gutters style="height: 100px; width: 700px;">
+          <v-row class="d-flex align-center">
             <v-text-field class="input-text" v-model="buscar" label="Buscar" required></v-text-field>
             <v-btn class="btn" elevation="1" @click.prevent="buscarPokemons(buscar)" large>Buscar</v-btn>
           </v-row>
@@ -21,23 +21,28 @@
         <div class="line"></div>
         <p class="text-center">{{texto}}</p>
         <div class="flex">
-          <v-row class="d-flex align-center" no-gutters style="height: 100px; width: 700px;">
+          <v-row class="d-flex align-center">
             <v-text-field class="input-text" v-model="buscar" label="Buscar" required></v-text-field>
             <v-btn class="btn" elevation="1" @click.prevent="buscarPokemons(buscar)" large>Buscar</v-btn>
           </v-row>
         </div>
-        <div class="card">
+        <div :class="{'card': $store.state.erro === false, 'cardNone': $store.state.erro === true}">
           <h3>{{pokemons.name | capitalize}}</h3>
           <img :src="pokemons.sprites.front_default" />
           <p>Tipo: {{pokemons.types[0].type.name | capitalize}}</p>
           <p>Habilidade: {{pokemons.abilities[0].ability.name | capitalize}}</p>
+          <v-btn class="btn" @click.prevent="addFigurinha(pokemons)">Adicionar</v-btn>
         </div>
-        <v-btn class="btn" @click.prevent="addFigurinha(pokemons)">Adicionar</v-btn>
       </div>
     </div>
-    <div v-if="$store.state.adicionado === false"></div>
+    <div v-if="$store.state.adicionado === false || $store.state.erro === true"></div>
     <div class="adicionado rotate" v-else>
       <img src="@/assets/gotcha.svg" />
+    </div>
+    <div
+      :class="{'erroTrue': $store.state.erro === true, 'erroFalse': $store.state.erro === false}"
+    >
+      <img src="@/assets/error.png" />
     </div>
   </section>
 </template>
@@ -133,7 +138,7 @@ h1 {
   padding: 20px;
   border-radius: 4px;
   margin-bottom: 20px;
-  margin-top: 10%;
+  margin-top: 10px;
 }
 
 .card p {
@@ -150,6 +155,26 @@ h1 {
   max-width: 200px;
   animation: rotate;
 }
+.card .btn {
+  margin-top: 20px;
+}
+.erroTrue {
+  margin-top: 300px;
+  margin-left: 170px;
+  display: block;
+}
+
+.cardNone {
+  display: none;
+}
+.erroFalse {
+  display: none;
+}
+.v-input {
+  width: 450px;
+  margin-top: 10px;
+}
+
 .rotate {
   -webkit-animation: rotate 0.6s ease-in-out 2 alternate-reverse both;
   animation: rotate 0.6s ease-in-out 2 alternate-reverse both;
@@ -172,6 +197,27 @@ h1 {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 600px) {
+  .v-input {
+    width: 250px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .flex p {
+    font-size: 14px;
+  }
+  .erroTrue img {
+    width: 300px;
+  }
+  .erroTrue {
+    margin-left: 40px;
   }
 }
 </style>

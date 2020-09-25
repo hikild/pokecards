@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     id: 0,
+    erro: false,
     mostrar: "false",
     adicionado: false,
     usuarios: [],
@@ -24,6 +25,11 @@ export default new Vuex.Store({
     saveId: (state) => {
       let idAtual = localStorage.getItem("id");
       return (state.id = idAtual);
+    },
+    userId: (state) => {
+      return function(id) {
+        return state.usuarios.filter((user) => user.id === id);
+      };
     },
     dadosUsuarios: (state) =>
       (state.usuarios = JSON.parse(localStorage.getItem("usuarios"))),
@@ -42,9 +48,16 @@ export default new Vuex.Store({
       state.adicionado = false;
       state.mostrar = "true";
       state.pokemons = payload;
+      state.erro = false;
     },
     ADD_COLECAO(state, payload) {
       state.colecoes.push({
+        caracteristicas: [
+          {
+            habilidade: payload.abilities[0].ability.name,
+            tipo: payload.types[0].type.name,
+          },
+        ],
         nome: payload.name,
         foto: payload.sprites.front_default,
         dono: router.currentRoute.params.id,
@@ -62,6 +75,10 @@ export default new Vuex.Store({
     },
     REMOVER_USUARIO(state, payload) {
       state.usuarios.splice(payload, 1);
+      state.id--;
+    },
+    EDITAR_USUARIO(state, payload) {
+      state.usuarios[router.currentRoute.params.id].nome = payload;
     },
   },
   actions: {
@@ -76,16 +93,27 @@ export default new Vuex.Store({
     addUsuario({ commit, dispatch }, usuario) {
       commit("ADICIONAR_USUSARIOS", usuario);
       dispatch("salvarUsuarios");
+      dispatch("salvarColecao");
       dispatch("salvarId");
     },
     removerUsuario({ commit, dispatch }, usuario) {
       commit("REMOVER_USUARIO", usuario);
       dispatch("salvarUsuarios");
+      dispatch("salvarColecao");
+      dispatch("salvarId");
     },
-    async buscarPokemons({ commit }, buscar) {
-      const response = await api.get(`/${buscar.toLowerCase()}`);
-      const result = response.data;
-      commit("BUSCA_POKEMON", result);
+    editarUsuario({ commit, dispatch }, nome) {
+      commit("EDITAR_USUARIO", nome);
+      dispatch("salvarUsuarios");
+    },
+    async buscarPokemons({ commit, state }, buscar) {
+      try {
+        const response = await api.get(`/${buscar.toLowerCase()}`);
+        const result = response.data;
+        commit("BUSCA_POKEMON", result);
+      } catch (error) {
+        state.erro = true;
+      }
     },
     salvarUsuarios({ state }) {
       let usuarios = state.usuarios.map((usuario) => {
@@ -102,8 +130,8 @@ export default new Vuex.Store({
     },
     salvarColecao({ state }) {
       let usuarios = state.colecoes.map((colecao) => {
-        let { nome, foto, dono } = colecao;
-        return { nome, foto, dono };
+        let { nome, foto, dono, caracteristicas } = colecao;
+        return { nome, foto, dono, caracteristicas };
       });
       let dados = JSON.stringify(usuarios);
       window.localStorage.setItem("colecoes", dados);

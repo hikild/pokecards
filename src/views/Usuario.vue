@@ -1,22 +1,46 @@
 <template>
   <div class="containerr align-center content">
     <div class="links">
-      <h2>
+      <h2 @click="$store.state.erro = false">
         <router-link :to="{name: 'inventario'}">Ver inventário</router-link>
       </h2>
       <h2>
         <router-link :to="{name: 'adicionar'}">Adicionar figurinhas</router-link>
       </h2>
+      <h2>
+        <router-link :to="{name: 'editar'}">Editar usuário</router-link>
+      </h2>
     </div>
     <transition mode="out-in">
-      <router-view></router-view>
+      <router-view class="view"></router-view>
     </transition>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Usuario",
+  data() {
+    return {
+      nome: "",
+      usuario: "",
+    };
+  },
+  computed: {
+    ...mapState(["usuarios"]),
+    ...mapGetters(["userId"]),
+  },
+  methods: {
+    ...mapActions(["editarUsuario"]),
+    getUserId() {
+      for (let i = 0; i < this.usuarios.length; i++) {
+        if (this.usuarios[i].id === this.$route.params.id) {
+          return (this.usuario = this.usuarios[i].nome);
+        }
+      }
+    },
+  },
 };
 </script>
 
@@ -42,5 +66,15 @@ h2 a:hover {
 }
 .content {
   margin-bottom: 40px;
+}
+.view {
+  height: 100%;
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 600px) {
+  .containerr {
+    width: 450px;
+  }
 }
 </style>

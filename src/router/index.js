@@ -6,6 +6,7 @@ import Usuarios from "../views/Usuarios.vue";
 import Pokedex from "../views/Pokedex.vue";
 import Adicionar from "../components/Adicionar.vue";
 import Inventario from "../components/Inventario.vue";
+import EditarUsuario from "../components/EditarUsuario.vue";
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ const routes = [
         path: "inventario",
         name: "inventario",
         component: Inventario,
+      },
+      {
+        path: "editar",
+        name: "editar",
+        component: EditarUsuario,
       },
     ],
   },

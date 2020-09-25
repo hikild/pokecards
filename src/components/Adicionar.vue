@@ -22,4 +22,11 @@ export default {
 .content {
   height: 100vh;
 }
+
+/* RESPONSIVO */
+@media screen and (max-width: 600px) {
+  .content {
+    height: 800px;
+  }
+}
 </style>

@@ -1,19 +1,14 @@
 <template>
   <v-app>
-    <div>
-      <div class="containerr align-center mb-6">
-        <img class="banner" src="@/assets/coroa.svg" />
-        <div class="line"></div>
-        <h1 class="text-center">Poké Cards</h1>
-        <p class="text-center">Busque e adicione sua coleção de figurinhas do Pokémon!</p>
-        <div class="flex">
-          <v-row class="d-flex align-center" no-gutters style="height: 100px; width: 700px;">
-            <v-text-field class="input-text" v-model="nome" label="Nome" required></v-text-field>
-          </v-row>
-          <v-row class="d-flex align-center" no-gutters style="height: 100px; width: 700px;">
-            <v-btn class="btn" elevation="1" @click="addUser(nome)" large>Adicionar usuário</v-btn>
-          </v-row>
-        </div>
+    <div class="containerr align-center">
+      <img class="banner" src="@/assets/coroa.svg" />
+      <div class="line"></div>
+      <h1 class="text-center">Poké Cards</h1>
+      <p class="text-center">Busque e adicione sua coleção de figurinhas do Pokémon!</p>
+      <div class="flex">
+        <v-text-field class="input-text" v-model="nome" label="Nome" required></v-text-field>
+        <p class="erro">{{nomeInvalido}}</p>
+        <v-btn class="btn" elevation="1" @click="addUser(nome)" large>Adicionar usuário</v-btn>
       </div>
     </div>
   </v-app>
@@ -26,14 +21,20 @@ export default {
   data() {
     return {
       nome: "",
+      nomeInvalido: "",
     };
   },
   methods: {
     ...mapActions(["addUsuario"]),
     addUser(nome) {
-      this.addUsuario(nome);
-      this.nome = "";
-      this.$router.push({ name: "usuarios" });
+      this.nomeInvalido = "";
+      if (nome === "") {
+        return (this.nomeInvalido = "Digite um nome válido.");
+      } else {
+        this.addUsuario(nome);
+        this.nome = "";
+        this.$router.push({ name: "usuarios" });
+      }
     },
   },
 };
@@ -77,5 +78,42 @@ h1 {
 
 .adicionar {
   align-self: flex-start;
+}
+.erro {
+  background: none;
+  color: red;
+  align-self: flex-start;
+  margin-bottom: 50px;
+}
+
+.v-input {
+  width: 450px;
+  margin-top: 10px;
+}
+
+/* RESPONSIVO */
+
+@media screen and (max-width: 600px) {
+  .v-application .align-center {
+    width: 450px;
+  }
+
+  .banner {
+    width: 100px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+
+  .v-input {
+    width: 300px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: 14px;
+  }
 }
 </style>

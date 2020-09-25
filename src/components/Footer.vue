@@ -19,8 +19,7 @@ export default {
   justify-content: center;
   align-items: center;
   background: #0073de;
-  align-self: flex-end;
-  top: 75px;
+  position: relative;
 }
 .footer img {
   width: 100%;
