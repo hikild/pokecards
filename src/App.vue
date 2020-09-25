@@ -15,7 +15,7 @@
 <script>
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
   components: {
@@ -25,7 +25,14 @@ export default {
   computed: {
     ...mapState(["usuarios", "id", "adicionado", "colecoes"]),
   },
-  mounted() {},
+  methods: {
+    ...mapActions(["salvarUsuarios", "salvarId", "salvarColecao"]),
+  },
+  mounted() {
+    this.salvarUsuarios();
+    this.salvarId();
+    this.salvarColecao();
+  },
 };
 </script>
 
