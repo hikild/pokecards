@@ -67,6 +67,12 @@ h2 {
   margin-bottom: 20px;
 }
 
+.theme--light.v-input,
+  .theme--light.v-input input,
+  .theme--light.v-input textarea {
+    width: 600px;
+  }
+
 /* RESPONSIVO */
 
 @media screen and (max-width: 600px) {
